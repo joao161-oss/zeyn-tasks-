@@ -1,0 +1,324 @@
+/* ==========================================================================
+   1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+:root {
+  --primary-color: #00ffcc;
+  --danger-color: #ff4d4d;
+  --bg-gradient: linear-gradient(135deg, #0f0f0f, #1a1a1a, #2a2a2a, #1a1a1a, #0f0f0f);
+  --sidebar-bg: #181818;
+  --card-bg: #222;
+  --card-hover: #2a2a2a;
+  --input-bg: #252525;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-dark: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+/* Botão da Esquerda (☰) */
+#toggleLeft {
+  position: absolute;
+  top: 15px;      /* Distância do topo */
+  left: 5px;      /* Quanto menor este número, mais perto do canto esquerdo */
+  z-index: 101;   /* Garante que fique acima da sidebar */
+}
+
+/* Botão da Direita (+) */
+#toggleRight {
+  position: absolute;
+  top: 15px;      /* Distância do topo */
+  right: 5px;     /* Quanto menor este número, mais perto do canto direito */
+  z-index: 101;
+}
+#toggleLeft, #toggleRight {
+  background: rgba(137, 137, 137, 0.2); /* Cor principal com transparência */
+  color: var(--primary-color);        /* Usa sua variável do root */
+  border: 1px solid var(--primary-color);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+#toggleLeft:hover, #toggleRight:hover {
+  opacity: 1;
+  background: var(--primary-color);
+  color: rgb(224, 224, 224);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: var(--text-main);
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
+   2. LAYOUT (ESTRUTURA PRINCIPAL)
+   ========================================================================== */
+.content {
+  margin-left: 220px;
+  margin-right: 220px;
+  padding: 40px 20px;
+  transition: margin var(--transition-smooth);
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 10px rgba(0, 255, 204, 0.2);
+}
+
+/* ==========================================================================
+   3. SIDEBARS
+   ========================================================================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background: var(--sidebar-bg);
+  padding: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  transition: all var(--transition-smooth);
+  z-index: 100;
+}
+
+.sidebar.left { left: 0; }
+.sidebar.right { right: 0; }
+
+.sidebar.closed {
+  width: 40px;
+}
+
+.sidebar.closed .menu, 
+.sidebar.closed h2 {
+  display: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* Inputs da Sidebar */
+.sidebar input, 
+.sidebar id[type="date"] {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: var(--input-bg);
+  color: white;
+  outline: none;
+}
+
+/* ==========================================================================
+   4. COMPONENTES (BOTÕES E INPUTS)
+   ========================================================================== */
+button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: filter 0.15s ease-in-out, transform 0.1s ease;
+}
+
+button:hover { filter: brightness(1.2); }
+button:active { transform: scale(0.96); }
+
+#addListBtn {
+  background: var(--primary-color);
+  color: black;
+  width: 100%;
+}
+
+.btn-danger {
+  background-color: var(--danger-color) !important;
+  color: white !important;
+}
+
+.category-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.category-btn {
+  background: #333;
+  font-size: 12px;
+  padding: 8px;
+  color: white;
+}
+
+.active-category, .active-filter {
+  background: var(--primary-color) !important;
+  color: black !important;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+}
+
+/* ==========================================================================
+   5. LISTA DE TAREFAS (CARDS)
+   ========================================================================== */
+.list {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+  cursor: grab;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list:hover {
+  transform: scale(1.02);
+  background-color: var(--card-hover);
+  box-shadow: var(--shadow-dark);
+}
+
+.list:active { cursor: grabbing; }
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list h3 {
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.5;
+  color: var(--text-muted);
+}
+
+/* Datas e Badges */
+.task-date {
+  margin-left: auto;
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+.overdue {
+  color: var(--danger-color) !important;
+  font-weight: bold;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.badge-escola { background-color: #e67e22; }
+.badge-casa { background-color: #27ae60; }
+.badge-lazer { background-color: #8e44ad; }
+.badge-trabalho { background-color: #7f8c8d; }
+.badge-geral { background-color: #16a085; }
+
+/* Drag and Drop State */
+.list.drag-over { border-top: 2px solid var(--primary-color); }
+
+/* ==========================================================================
+   6. MODAL
+   ========================================================================== */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.modal-content {
+  background-color: #1a1a1a;
+  margin: 5vh auto;
+  width: 80%; 
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.modal-body input {
+  width: 100%;
+  padding: 15px;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.modal-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+}
+
+#saveEdit { background: var(--primary-color); color: black; flex: 2; }
+#closeModal { background: #444; color: white; flex: 1; }
+
+hr { border: 0; border-top: 1px solid #333; margin: 20px 0; }
+.btn-danger {
+  background: #ff4d4d !important;
+  color: white !important;
+}
+
+.btn-danger:hover {
+  background: #ff3333 !important;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+.search-container {
+  position: relative; /* Pai relativo */
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  display: flex;
+  align-items: center;
+}
+
+.compass-icon {
+  position: absolute; /* Filho absoluto */
+  left: 15px;
+  color: var(--primary-color);
+  font-size: 18px;
+  transition: transform 0.5s ease; /* Para a animação de girar */
+  pointer-events: none; /* Para não atrapalhar o clique no input */
+}
+
+/* Efeito extra: A bússola gira quando você clica na barra! */
+.search-container:focus-within .compass-icon {
+  transform: rotate(360deg);
+  color: white;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px 12px 12px 45px; /* Aumentamos o padding da esquerda (45px) para o texto não ficar em cima do ícone */
+  border-radius: 20px;
+  border: 1px solid #444;
+  background: #222;
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
+}

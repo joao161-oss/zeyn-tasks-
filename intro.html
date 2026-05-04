@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeyn Tasks</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="content" id="content">
+    <h1 class="title">To-Do List</h1>
+    
+    <div class="search-container">
+      <i class="fa-solid fa-compass compass-icon"></i>
+      <input type="text" id="searchInput" placeholder="Explorar deveres..." aria-label="Pesquisar tarefas">
+    </div>
+
+    <div id="listsContainer"></div>
+  </div>
+
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <h2>Configurações do Dever</h2>
+      <hr>
+      <div class="modal-body">
+        <label for="editInput">Nome do dever:</label>
+        <input type="text" id="editInput" placeholder="Ex: Estudar Matemática">
+
+        <label for="editDateInput" style="display:block; margin-top:15px;">Nova Data:</label>
+        <input type="date" id="editDateInput">
+
+        <label for="editCategorySelect" style="display:block; margin-top:15px;">Mudar Categoria:</label>
+        <select id="editCategorySelect" class="category-select-field">
+          <option value="Escola">Escola</option>
+          <option value="Casa">Casa</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Geral">Geral</option>
+        </select>
+      </div>
+
+      <div class="modal-buttons">
+        <button id="saveEdit">Salvar Alterações</button>
+        <button id="deleteTask" class="btn-danger">Excluir Dever</button> 
+        <button id="closeModal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal" style="display: none; z-index: 2000;">
+    <div class="modal-content confirmation-box">
+      <h3>Excluir dever?</h3>
+      <p>Esta ação não pode ser desfeita.</p>
+      <div class="modal-buttons">
+        <button id="confirmDelete" class="btn-danger">Sim, excluir</button>
+        <button id="cancelDelete">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar left" id="sidebarLeft">
+    <button id="toggleLeft" aria-label="Abrir menu de filtros">☰</button>
+    <div class="menu">
+      <h2>Filtros</h2>
+      <button id="filterAll" class="active-filter">Todas</button>
+      <button id="filterDone">Completas</button>
+      <button id="filterPending">Incompletas</button>
+    </div>
+  </div>
+
+  <div class="sidebar right" id="sidebarRight">
+    <button id="toggleRight" aria-label="Abrir menu de criação">+</button>
+    <div class="menu">
+      <h2>Novo Dever</h2>
+      <p>Categoria:</p>
+      <div class="category-selector">
+        <button class="category-btn" data-type="Escola">Escola</button>
+        <button class="category-btn" data-type="Casa">Casa</button>
+        <button class="category-btn" data-type="Lazer">Lazer</button>
+        <button class="category-btn" data-type="Trabalho">Trabalho</button>
+      </div>
+      
+      <label for="dateInput">Prazo:</label>
+      <input type="date" id="dateInput">
+      
+      <input type="text" id="listInput" placeholder="Nome do dever...">
+      <button id="addListBtn">Criar dever</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
