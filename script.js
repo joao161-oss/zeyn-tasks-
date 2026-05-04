@@ -110,7 +110,7 @@ function render() {
       e.stopPropagation();
       currentEditIdx = originalIndex;
       
-      // --- MUDANÇA AQUI: Carrega os dados atuais no Modal ---
+
       editInput.value = data.title;
       editDateInput.value = data.deadline || "";
       editCategorySelect.value = data.category || "Geral";
@@ -150,7 +150,7 @@ confirmDelete.onclick = () => {
 
 cancelDelete.onclick = () => confirmModal.style.display = "none";
 
-// --- MUDANÇA AQUI: Salva todas as novas informações ---
+
 saveEdit.onclick = () => {
   if (editInput.value.trim() !== "" && currentEditIdx !== null) {
     myLists[currentEditIdx].title = editInput.value.trim();
